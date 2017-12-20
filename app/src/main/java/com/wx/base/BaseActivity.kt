@@ -4,17 +4,15 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.View
 import com.wx.debug.DebugApplication
+import com.zhy.autolayout.AutoLayoutActivity
 
 /**
  * Created by sks on 2017/1/3.
  */
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AutoLayoutActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,34 +42,6 @@ abstract class BaseActivity : AppCompatActivity() {
         if (isFinish) {
             finish()
         }
-    }
-
-    /**
-     * 显示snackbar
-     *
-     * @param view
-     * @param message
-     * @param duration
-     * */
-    fun showSnackBar(view: View, message: String, duration: Int = Snackbar.LENGTH_SHORT){
-        Snackbar.make(view, message, duration)
-                .show()
-    }
-
-    /**
-     * 显示带有action的snackbar
-     *
-     *@param view
-     * @param message
-     * @param duration
-     * @param actionMsg
-     * @param listener
-     * */
-    fun showSnackBarWithAction(view: View, message: String, duration: Int = Snackbar.LENGTH_SHORT,
-                               actionMsg: String, listener: View.OnClickListener){
-        Snackbar.make(view, message, duration)
-                .setAction(actionMsg, listener)
-                .show()
     }
 
     override fun onDestroy() {
