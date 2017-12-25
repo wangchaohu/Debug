@@ -10,11 +10,28 @@
         android:layout_margin="10px"
         android:gravity="center_vertical"
         android:padding="10px"
+
         android:text="收件人:"/>
     <EditText
         android:id="@+id/getEmail"
         android:layout_width="match_parent"
         android:layout_margin="10px"
+        android:hint="输入收件人邮箱，以  ,隔开"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="400px"
+        android:layout_height="150px"
+        android:textSize="80px"
+        android:layout_margin="10px"
+        android:gravity="center_vertical"
+        android:padding="10px"
+        android:text="邮件内容:"/>
+    <EditText
+        android:id="@+id/ccEmail"
+        android:layout_width="match_parent"
+        android:layout_margin="10px"
+        android:hint="输入抄送收件人邮箱，以 , 隔开"
         android:layout_height="wrap_content" />
 
     <TextView
@@ -36,18 +53,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:text="普通发送"/>
-
+        android:text="发送邮件"/>
     <Button
-        android:id="@+id/muliSend"
+        android:id="@+id/addAttachment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加附件"/>
+    <Button
+        android:id="@+id/attachmentSend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:text="群发邮件"/>
-    <Button
-        android:id="@+id/copySend"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="抄送功能发送邮件"/>
+        android:text="附件功能发送邮件"/>
 </LinearLayout>
