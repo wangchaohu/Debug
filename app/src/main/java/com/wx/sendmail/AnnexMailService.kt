@@ -2,16 +2,15 @@ package com.wx.sendmail
 
 import java.util.*
 import javax.mail.*
-import javax.mail.internet.InternetAddress
-import javax.mail.internet.MimeBodyPart
-import javax.mail.internet.MimeMessage
-import javax.mail.internet.MimeMultipart
 import android.R.attr.password
 import android.R.attr.host
 import javax.activation.CommandMap
 import javax.activation.CommandMap.setDefaultCommandMap
 import javax.activation.CommandMap.getDefaultCommandMap
+import javax.activation.DataHandler
+import javax.activation.FileDataSource
 import javax.activation.MailcapCommandMap
+import javax.mail.internet.*
 
 
 /**
@@ -50,15 +49,42 @@ class AnnexMailService {
 //            设置邮件消息的发送者
             mailMessage.setFrom(from)
 //            创建邮件的接收者地址
-            var tos = arrayOfNulls<Address>(mailInfo.receivers.size)
-            var receivers = mailInfo.receivers;
-            if (receivers.isNotEmpty()) {
-                for ( i:Int in receivers.indices){
-                    tos.set(i,InternetAddress(mailInfo.receivers.get(i)))
+            var tos = emptyArray<Address>()
+            var receivers = mailInfo.receivers
+            if (receivers.contains(",")) {
+                var to = receivers.split(",")
+                for (i: Int in to.indices) {
+                    if (to[i] != "") {
+                        tos = arrayOf(InternetAddress(to[i]))
+                    }
+                }
+            } else {
+                if (receivers != "") {
+                    tos = arrayOf(InternetAddress(receivers))
+                }
+
+            }
+
+//            创建抄送人地址
+            var ccs = emptyArray<Address>()
+
+            var cc = mailInfo.ccs
+            if (cc.contains(",")) {
+                var to = cc.split(",")
+                for (i: Int in to.indices) {
+                    if (to[i] != "") {
+                        ccs = arrayOf( InternetAddress(to[i]))
+                    }
+                }
+            } else {
+                if (cc != "") {
+                    ccs = arrayOf(InternetAddress(cc))
                 }
             }
+
 //
             mailMessage.setRecipients(Message.RecipientType.TO, tos)
+            mailMessage.setRecipients(Message.RecipientType.CC, ccs)
 //            设置邮件消息的主题
             mailMessage.setSubject(mailInfo.subject)
 //            设置邮件的发送时间
@@ -70,14 +96,34 @@ class AnnexMailService {
 //            设置html内容
             html.setContent(mailInfo.content, "text/html; charset=utf-8")
             mainPart.addBodyPart(html)
+
+            //附件
+            var files = mailInfo.attachFileNames
+            if (files.isNotEmpty()) {
+                for (i in files.indices) {
+                    if (files.elementAt(i) != "" ) {
+                        var attachmentBodyPart = MimeBodyPart()
+                        //根据附件路径获取文件
+                        var dataSource = FileDataSource(files.elementAt(i))
+                        attachmentBodyPart.dataHandler = DataHandler(dataSource)
+//                    避免文件名乱码
+                        attachmentBodyPart.fileName = MimeUtility.encodeWord(dataSource.file.name)
+                        mainPart.addBodyPart(attachmentBodyPart)
+                    }
+                }
+
+            }
+
 //            将MiniMultipart对象设置为邮件内容
             mailMessage.setContent(mainPart)
+
+
             //发送邮件
 //            Transport.send(mailMessage)
             val mc = CommandMap.getDefaultCommandMap() as MailcapCommandMap
-//            mc.addMailcap("text/html;; x-java-content-handler=com.sun.mail.handlers.text_html")
+            mc.addMailcap("text/html;; x-java-content-handler=com.sun.mail.handlers.text_html")
 //            mc.addMailcap("text/xml;; x-java-content-handler=com.sun.mail.handlers.text_xml")
-            mc.addMailcap("text/plain;; x-java-content-handler=com.sun.mail.handlers.text_plain")
+//            mc.addMailcap("text/plain;; x-java-content-handler=com.sun.mail.handlers.text_plain")
 //            mc.addMailcap("multipart/*;; x-java-content-handler=com.sun.mail.handlers.multipart_mixed")
 //            mc.addMailcap("message/rfc822;; x-java-content-handler=com.sun.mail.handlers.message_rfc822")
             CommandMap.setDefaultCommandMap(mc)
@@ -87,7 +133,7 @@ class AnnexMailService {
             transport.sendMessage(mailMessage, mailMessage.getAllRecipients())
             transport.close()
             return true
-        }catch (e: MessagingException){
+        } catch (e: MessagingException) {
             e.printStackTrace()
         }
         return false
