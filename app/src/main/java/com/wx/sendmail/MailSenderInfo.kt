@@ -17,6 +17,7 @@ import java.util.*
  * @property subject   邮件主题
  * @property content   邮件内容
  * @property receivers 群发邮件收件地址列表
+ * @property ccs 抄送收件人
  * @property attachFileNames   邮件附件的文件名
  */
 class MailSenderInfo {
@@ -29,9 +30,9 @@ class MailSenderInfo {
     var validate = "false"
     var subject = ""
     var content = ""
-    var receivers = emptyArray<String>()
-    var attachFileNames = emptyArray<String>()
-
+    var receivers = ""
+    var attachFileNames = emptySet<String>()
+    var ccs = ""
 
     /**
      * 获取邮件会话属性

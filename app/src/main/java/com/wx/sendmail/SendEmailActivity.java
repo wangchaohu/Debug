@@ -35,7 +35,7 @@ public class SendEmailActivity extends BaseActivity {
 
     private EditText editText, editText2;
     private String receEmail, ccEmail, filePath;
-    private HashSet<String> files;
+    private HashSet<String> files = new HashSet<String>();
 
     @Override
     public void initViews(Bundle savedInstanceState) {
@@ -56,7 +56,6 @@ public class SendEmailActivity extends BaseActivity {
         findViewById(R.id.addAttachment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                files = new HashSet<String>();
                 openCurDir();
             }
         });
