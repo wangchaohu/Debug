@@ -36,3 +36,26 @@ dependencies {
     //屏幕适配
     implementation 'com.zhy:autolayout:1.4.5'
 }
+
+//将任意类打jar包
+task makeJar(type: org.gradle.api.tasks.bundling.Jar) {
+    baseName 'yephone1.8'  //lib包名
+//  删除旧版本
+//    delect 'build/libs/yephone1.8.jar'
+
+    from("build/intermediates/classes/release/org/")     //打包目录文件夹
+//    from(project.zipTree("lib/commons-compress-1.9.jar"))  //添加第三方jar包
+
+    into("org/")//打包后的文件夹
+
+//    混淆配置
+//    extractProguardFiles = "proguard-rules.pro"
+//    是否需要默认的混淆配置proguard-android.txt
+//    needDefaultProguard = true
+// exclude('BuildConfig.class', 'R.class')   //去除这些文件
+
+    exclude { it.name.startsWith('R$'); }
+}
+
+makeJar.dependsOn(build)
+
