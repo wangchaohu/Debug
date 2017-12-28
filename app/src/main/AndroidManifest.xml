@@ -32,5 +32,6 @@
         <activity android:name="com.wx.sendmail.SendEmailActivity"/>
         <activity android:name="com.wx.viewdrag.ViewDragActivity"/>
         <activity android:name="com.wx.write.WriteActivity"/>
+        <activity android:name="com.wx.datepick.DatePickActivity"/>
     </application>
 </manifest>
