@@ -11,10 +11,12 @@ import android.widget.Button;
 
 import com.wx.base.BaseActivity;
 import com.wx.customlottie.CustomLottieActivity;
+import com.wx.datepick.CustomerDatePicker;
 import com.wx.datepick.DatePickActivity;
 import com.wx.debug.R;
 import com.wx.lottie.LottieActivity;
 import com.wx.sendmail.SendEmailActivity;
+import com.wx.view.CustomViewActivity;
 import com.wx.viewdrag.ViewDragActivity;
 import com.wx.write.WriteActivity;
 
@@ -31,9 +33,9 @@ import java.util.List;
  */
 public class RecycleActivity extends BaseActivity {
 
-    private List<String> chwang_s = Arrays.asList("Lottie简单使用","Lottie自定义动画","ViewDrag使用","读写文件","发送邮件","日期时间选择");
+    private List<String> chwang_s = Arrays.asList("Lottie简单使用","Lottie自定义动画","ViewDrag使用","读写文件","发送邮件","日期时间选择","自定义view");
     private List chwang_c = Arrays.asList(LottieActivity.class, CustomLottieActivity.class, ViewDragActivity.class, WriteActivity.class,
-            SendEmailActivity.class, DatePickActivity.class);
+            SendEmailActivity.class, DatePickActivity.class, CustomViewActivity.class);
 
     @Override
     public void initViews(Bundle savedInstanceState) {
