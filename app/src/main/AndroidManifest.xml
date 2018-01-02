@@ -34,5 +34,6 @@
         <activity android:name="com.wx.write.WriteActivity"/>
         <activity android:name="com.wx.datepick.DatePickActivity"/>
         <activity android:name="com.wx.view.CustomViewActivity"/>
+        <activity android:name="com.wx.qrcode.QRCodeActivity"/>
     </application>
 </manifest>

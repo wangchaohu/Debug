@@ -35,6 +35,8 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.0.2'
     //屏幕适配
     implementation 'com.zhy:autolayout:1.4.5'
+//    二维码生成
+//    implementation 'com.google.zxing:core:3.3.1'
 }
 
 //将任意类打jar包
