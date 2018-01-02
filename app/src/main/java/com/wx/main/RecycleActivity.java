@@ -1,6 +1,9 @@
 package com.wx.main;
 
 import android.app.Activity;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +19,7 @@ import com.wx.debug.R;
 import com.wx.lottie.LottieActivity;
 import com.wx.qrcode.QRCodeActivity;
 import com.wx.sendmail.SendEmailActivity;
+import com.wx.utils.UtilsKt;
 import com.wx.view.CustomViewActivity;
 import com.wx.viewdrag.ViewDragActivity;
 import com.wx.write.WriteActivity;
@@ -26,28 +30,31 @@ import java.util.List;
 
 /**
  * Created by xwangch on 16/8/2.
- *
+ * <p>
  * fun：主界面
- *
+ * <p>
  * 可以根据数组长度的大小自动添加按钮，实现跳转
  */
 public class RecycleActivity extends BaseActivity {
 
-    private List<String> chwang_s = Arrays.asList("Lottie简单使用","Lottie自定义动画","ViewDrag使用","读写文件","发送邮件","日期时间选择","自定义view",
+    private List<String> chwang_s = Arrays.asList("Lottie简单使用", "Lottie自定义动画", "ViewDrag使用", "读写文件", "发送邮件", "日期时间选择", "自定义view",
             "生成二维码");
     private List chwang_c = Arrays.asList(LottieActivity.class, CustomLottieActivity.class, ViewDragActivity.class, WriteActivity.class,
             SendEmailActivity.class, DatePickActivity.class, CustomViewActivity.class, QRCodeActivity.class);
 
+    private SoundPool soundPool;
+    private int soundId;  //创建某个声音对应的音频id
+
     @Override
     public void initViews(Bundle savedInstanceState) {
         setContentView(R.layout.activity_recycleview_main);
-
+        initSound();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new MyRecycleViewAdapter(this));
     }
 
-    class MyRecycleViewAdapter extends RecyclerView.Adapter<MyViewHolder>{
+    class MyRecycleViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
         /**
          * 如果想要添加一个按钮，则在contentData中添加一个按钮名称即可，
          * 以及在skipClass中添加一个要跳转的类名
@@ -73,9 +80,10 @@ public class RecycleActivity extends BaseActivity {
         public void onBindViewHolder(MyViewHolder holder, final int position) {
 
             holder.getBtn().setText(chwang_s.get(position));
-             holder.getBtn().setOnClickListener(new View.OnClickListener() {
+            holder.getBtn().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    playSound();
                     startActivityByIntent(RecycleActivity.this, (Class) chwang_c.get(position), false);
                 }
             });
@@ -88,10 +96,35 @@ public class RecycleActivity extends BaseActivity {
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            btn_item = (Button)itemView.findViewById(R.id.button);
+            btn_item = (Button) itemView.findViewById(R.id.button);
         }
+
         public Button getBtn() {
             return btn_item;
         }
+    }
+
+    /**
+     * 初始化音效
+     */
+
+    private void initSound() {
+        if (UtilsKt.checkVersion(Build.VERSION_CODES.LOLLIPOP)){
+            soundPool = new SoundPool.Builder().build();
+        }else {
+            soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+        }
+
+        soundId = soundPool.load(this, R.raw.music, 1);
+    }
+
+    private void playSound() {
+        soundPool.play(soundId,
+                0.1f,   //左耳道音量
+                0.5f,  //右耳道音量
+                0,    //播放优先级，0表示最低优先级
+                0,   //循环模式，0表示循环一次，-1表示一直循环，，+1表示当前循环次数
+                1   //播放速度，1是正常，范围0-2
+        );
     }
 }

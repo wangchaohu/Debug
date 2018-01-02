@@ -1,6 +1,7 @@
 package com.wx.utils
 
 import android.content.Context
+import android.os.Build
 import android.support.design.widget.Snackbar
 import android.util.Log
 import android.view.View
@@ -59,4 +60,14 @@ fun View.showSnackBarWithAction(view: View, message: String, duration: Int = Sna
 
 fun log(tag: String = "wang", message: String){
     Log.e(tag,message)
+}
+
+/**
+ * 安卓版本判断
+ * @param version 版本临界
+ * @return 返回是否大于传入版本
+ * */
+
+fun checkVersion(version: Int) : Boolean{
+    return Build.VERSION.SDK_INT > version
 }
