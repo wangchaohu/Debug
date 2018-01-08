@@ -18,6 +18,6 @@ class CustomViewActivity : BaseActivity{
 
     override fun onStart() {
         super.onStart()
-        myView.startAnimator()
+//        myView.startAnimator()
     }
 }

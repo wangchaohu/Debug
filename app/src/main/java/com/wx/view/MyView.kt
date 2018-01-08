@@ -47,7 +47,8 @@ class MyView : View {
 
         wave(canvas)
 
-        canvas?.drawPath(mPath, mPaint)
+//        手写效果
+//        canvas?.drawPath(mPath, mPaint)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
