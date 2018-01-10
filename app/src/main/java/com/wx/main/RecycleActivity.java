@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
@@ -18,10 +19,12 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.wx.base.BaseActivity;
+import com.wx.customer.CustomerActivity;
 import com.wx.customlottie.CustomLottieActivity;
 import com.wx.datepick.DatePickActivity;
 import com.wx.debug.R;
 import com.wx.lottie.LottieActivity;
+import com.wx.processalive.JobHandlerService;
 import com.wx.qrcode.QRCodeActivity;
 import com.wx.sendmail.SendEmailActivity;
 import com.wx.utils.UtilsKt;
@@ -45,9 +48,9 @@ import static com.wx.utils.UtilsKt.checkVersion;
 public class RecycleActivity extends BaseActivity implements View.OnClickListener{
 
     private List<String> chwang_s = Arrays.asList("Lottie简单使用", "Lottie自定义动画", "ViewDrag使用", "读写文件", "发送邮件", "日期时间选择", "自定义view",
-            "生成二维码");
+            "生成二维码","CustomerView");
     private List chwang_c = Arrays.asList(LottieActivity.class, CustomLottieActivity.class, ViewDragActivity.class, WriteActivity.class,
-            SendEmailActivity.class, DatePickActivity.class, CustomViewActivity.class, QRCodeActivity.class);
+            SendEmailActivity.class, DatePickActivity.class, CustomViewActivity.class, QRCodeActivity.class, CustomerActivity.class);
 
     private SoundPool soundPool;
     private int soundId;  //创建某个声音对应的音频id
@@ -69,6 +72,8 @@ public class RecycleActivity extends BaseActivity implements View.OnClickListene
     protected void onStart() {
         super.onStart();
         initData();
+        /*系统程序保活失败*/
+//        startService(new Intent(this, JobHandlerService.class));
     }
 
     private void init(){
