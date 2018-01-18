@@ -95,7 +95,6 @@ class HoverBallView : View {
                 if (progress > RADUS * 2) {
                     progress = 0
                 }
-                log(message = "$progress")
                 progress += 10
                 postInvalidate()
 

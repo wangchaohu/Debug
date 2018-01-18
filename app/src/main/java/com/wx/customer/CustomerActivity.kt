@@ -28,4 +28,9 @@ class CustomerActivity: BaseActivity,SeekBar.OnSeekBarChangeListener {
 
     override fun onStopTrackingTouch(p0: SeekBar?) {
     }
+
+    override fun onResume() {
+        super.onResume()
+        wheelView.startAnimation()
+    }
 }
